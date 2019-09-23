@@ -220,6 +220,11 @@ function makeThingsFixtures() {
   return { testUsers, testThings, testReviews }
 }
 
+function makeAuthHeader(user) {
+  const token = Buffer.from(`${user.user_name}:${user.password}`).toString('base64')
+  return `Basic ${token}`
+}
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -264,6 +269,7 @@ module.exports = {
   makeReviewsArray,
 
   makeThingsFixtures,
+  makeAuthHeader,
   cleanTables,
   seedThingsTables,
   seedMaliciousThing,
